@@ -1,0 +1,128 @@
+FORMAT: 1A
+HOST: http://polls.apiblueprint.org/
+
+# Welcome
+Welcome to kipalog API guide, we're happy to have you as a developer who are willing to make kipalog a better place.
+This document provide some simple guides to call kipalog api.
+
+# Prepare
+To call kipalog api, two below conditions need to be satisfied:
+- You must be a registered kipalog user
+- You must have "at least" two written post at kipalog
+
+You may ask: Why we need to write post to using an API.
+The answer is simple: We need to confirm you as a human :P. Moreover, we want you to be an user who is humble to share your knowledge, before giving you a way to get knowledge from another people :). To write post is easy, you can write 2 short [TIL Post](http://kipalog.com/til), to share whatever you've learnt today.
+
+# API guide
+
+Kipalog provide api-authenticate by using http header named "X-Kipalog-Token".
+The token is automatically granted to all users who wrote 2 posts at kipalog.
+
+## Where you can get the token?
+
+Go to [Cài đặt] menu at the bottom right, and you will see below screen:
+
+![](https://i.gyazo.com/7633c7ef585f3a10c75578d71856728b.png)
+
+Take the red part, this is your token (or api key).
+Be remember : *Keep this token safe*, or other people will be able to act as your behave at kipalog :(.
+
+### Create new post [POST /api/v1/post]
+What: To create a new post at kipalog
+Limit: 20 request / 1 days
+
++ Request (application/json)
+
+    + Headers
+
+            Accept-Charset: application/json
+            X-Kipalog-Token: 50apc5dac3vwjvbrr8631s42j1veif
+
+    + Attributes
+        + title: `Khởi nghiệp? Xem film này đi!` (string, required)
+        + content: `Joy (2015)` (string, required)
+        + status (enum, required)
+            + published (string)
+            + draft (string)
+        + tag: `startup, film` (string) - list of tags, separated by comma
+
+            
++ Response 201 (application/json)
+
+    + Attributes
+        + content: `` (string) - normally empty
+        + status: 201 (number) - http status code
+        + cause: `` (string) - failed reason if failed
+
+### Preview post [POST /api/v1/post/preview]
+
+What: To preview a post at kipalog using kipalog markdown engine
+Limit: 100 request / 5 minutes
+
++ Request (application/json)
+
+    + Headers
+
+            Accept-Charset: application/json
+            X-Kipalog-Token: 50apc5dac3vwjvbrr8631s42j1veif
+            
+    + Attributes
+        + content: `Content of a post (markdown)` (string, required) - `content of need-rendered post`
+
++ Response 200 (application/json)
+
+    + Attributes
+        + content: `<html><body>Content of a post (markdown)</body></html>` (string) - rendered html of posted content
+        + status: 200 (number) - http status code
+        + cause: `` (string) - failed reason if fail
+        
+### Get hot posts [GET /api/v1/post/hot]
+
+What: Get 30 recent hot post [only public-ed post] Limit: 300 request / 5 minutes
+
++ Response 200 (application/json)
+
+    + Attributes
+        + status: 200 (number) - http status code
+        + cause: `` (string) - http status code
+        + content (array)
+            + title: `Preview` (string) - post title
+            + content: `Content of a post (markdown)` (string) - Markdown content
+
+### Get newest posts [GET /api/v1/post/newest]
+
+What: Get 30 recent newest post
+Limit: 300 request / 5 minutes
+
++ Response 200 (application/json)
+
+    + Attributes
+        + status: 200 (number) - http status code
+        + cause: `` (string) - http status code
+        + content (array)
+            + title: `Preview` (string) - post title
+            + content: `Content of a post (markdown)` (string) - Markdown content
+
+### Get posts by tag [POST /api/v1/post/bytag]
+
+What: Get 30 recent post by tag
+Limit: 300 request / 5 minutes
+
++ Request
+
+    + Headers
+
+            Accept-Charset: application/json
+            X-Kipalog-Token: 50apc5dac3vwjvbrr8631s42j1veif
+            
+    + Attributes
+        + tag_name: `til` (string, required) - a tag
+            
++ Response 200 (application/json)
+
+    + Attributes
+        + status: 200 (number) - http status code
+        + cause: `` (string) - http status code
+        + content (array)
+            + title: `Preview` (string) - post title
+            + content: `Content of a post (markdown)` (string) - Markdown content
