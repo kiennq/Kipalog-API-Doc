@@ -46,7 +46,7 @@ Limit: 20 request / 1 days
             + draft (string)
         + tag: `startup, film` (string) - list of tags, separated by comma
 
-            
+
 + Response 201 (application/json)
 
     + Attributes
@@ -65,17 +65,17 @@ Limit: 100 request / 5 minutes
 
             Accept-Charset: application/json
             X-Kipalog-Token: 50apc5dac3vwjvbrr8631s42j1veif
-            
+
     + Attributes
         + content: `Content of a post (markdown)` (string, required) - `content of need-rendered post`
 
 + Response 200 (application/json)
 
     + Attributes
-        + content: `<html><body>Content of a post (markdown)</body></html>` (string) - rendered html of posted content
+        + content: `<html><body>Nội dung của post (markdown).</body></html>` (string) - rendered html of posted content
         + status: 200 (number) - http status code
         + cause: `` (string) - failed reason if fail
-        
+
 ### Get hot posts [GET /api/v1/post/hot]
 
 What: Get 30 recent hot post [only public-ed post] Limit: 300 request / 5 minutes
@@ -114,10 +114,10 @@ Limit: 300 request / 5 minutes
 
             Accept-Charset: application/json
             X-Kipalog-Token: 50apc5dac3vwjvbrr8631s42j1veif
-            
+
     + Attributes
         + tag_name: `til` (string, required) - a tag
-            
+
 + Response 200 (application/json)
 
     + Attributes
